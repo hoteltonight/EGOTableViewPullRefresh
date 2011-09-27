@@ -44,7 +44,7 @@
     if((self = [super initWithFrame:frame])) {
 		
 		self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        self.backgroundColor = [UIColor blackColor];
+        self.backgroundColor = BACKGROUND_COLOR;
 
 		UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, frame.size.height - 30.0f, self.frame.size.width, 20.0f)];
 		label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
