@@ -38,6 +38,7 @@
 @implementation EGORefreshTableHeaderView
 
 @synthesize delegate=_delegate;
+@synthesize scrollViewInsets = _scrollViewInsets;
 
 
 - (id)initWithFrame:(CGRect)frame arrowImageName:(NSString *)arrow textColor:(UIColor *)textColor  {
@@ -182,8 +183,8 @@
 	
 	if (_state == EGOOPullRefreshLoading) {
 		
-		CGFloat offset = MAX(scrollView.contentOffset.y * -1, 0);
-		offset = MIN(offset, 60);
+		CGFloat offset = MAX(scrollView.contentOffset.y * -1, self.scrollViewInsets.top);
+		offset = MIN(offset, 60 + self.scrollViewInsets.top);
         UIEdgeInsets insets = scrollView.contentInset;
         insets.top = offset;
 		scrollView.contentInset = insets;
@@ -195,15 +196,15 @@
 			_loading = [_delegate egoRefreshTableHeaderDataSourceIsLoading:self];
 		}
 		
-		if (_state == EGOOPullRefreshPulling && scrollView.contentOffset.y > -65.0f && scrollView.contentOffset.y < 0.0f && !_loading) {
+		if (_state == EGOOPullRefreshPulling && scrollView.contentOffset.y > -65.0f + self.scrollViewInsets.top && scrollView.contentOffset.y < self.scrollViewInsets.top && !_loading) {
 			[self setState:EGOOPullRefreshNormal];
-		} else if (_state == EGOOPullRefreshNormal && scrollView.contentOffset.y < -65.0f && !_loading) {
+		} else if (_state == EGOOPullRefreshNormal && scrollView.contentOffset.y < -65.0f + self.scrollViewInsets.top && !_loading) {
 			[self setState:EGOOPullRefreshPulling];
 		}
 		
-		if (scrollView.contentInset.top != 0) {
+		if (scrollView.contentInset.top != self.scrollViewInsets.top) {
             UIEdgeInsets insets = scrollView.contentInset;
-            insets.top = 0.0;
+            insets.top = self.scrollViewInsets.top;
 			scrollView.contentInset = insets;
 		}
 		
@@ -218,7 +219,7 @@
 		_loading = [_delegate egoRefreshTableHeaderDataSourceIsLoading:self];
 	}
 	
-	if (scrollView.contentOffset.y <= - 65.0f && !_loading) {
+	if (scrollView.contentOffset.y <= - 65.0f + self.scrollViewInsets.top && !_loading) {
 		
 		if ([_delegate respondsToSelector:@selector(egoRefreshTableHeaderDidTriggerRefresh:)]) {
 			[_delegate egoRefreshTableHeaderDidTriggerRefresh:self];
@@ -228,7 +229,7 @@
 		[UIView beginAnimations:nil context:NULL];
 		[UIView setAnimationDuration:0.2];
         UIEdgeInsets insets = scrollView.contentInset;
-        insets.top = 60.0f;
+        insets.top = 60.0f + self.scrollViewInsets.top;
 		scrollView.contentInset = insets;
 		[UIView commitAnimations];
 		
@@ -241,7 +242,7 @@
 	[UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationDuration:.3];
     UIEdgeInsets insets = scrollView.contentInset;
-    insets.top = 0.0f;
+    insets.top = self.scrollViewInsets.top;
     scrollView.contentInset = insets;
 	[UIView commitAnimations];
 	
