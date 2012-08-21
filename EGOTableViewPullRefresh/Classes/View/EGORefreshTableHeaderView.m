@@ -78,7 +78,7 @@
 		[[self layer] addSublayer:layer];
 		_arrowImage=layer;
 		
-		HTActivityIndicator *view = [[HTActivityIndicator alloc] init];
+		HTActivityIndicator *view = [[HTActivityIndicator alloc] initWithIndicatorStyle:HTActivityIndicatorStyleMediumWhite];
 		view.frame = CGRectMake(25.0f, frame.size.height - 38.0f, 20.0f, 20.0f);
 		[self addSubview:view];
 		_activityView = view;
