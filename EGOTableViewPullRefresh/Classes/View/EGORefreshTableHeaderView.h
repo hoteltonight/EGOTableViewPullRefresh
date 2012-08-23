@@ -27,8 +27,6 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
-@class HTActivityIndicator;
-
 typedef enum{
 	EGOOPullRefreshPulling = 0,
 	EGOOPullRefreshNormal,
@@ -44,7 +42,7 @@ typedef enum{
 	UILabel *_lastUpdatedLabel;
 	UILabel *_statusLabel;
 	CALayer *_arrowImage;
-	HTActivityIndicator *_activityView;
+	UIView *_activityView;
 }
 
 @property(nonatomic,assign) id <EGORefreshTableHeaderDelegate> delegate;
