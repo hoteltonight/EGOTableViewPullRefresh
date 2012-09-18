@@ -25,7 +25,6 @@
 //
 
 #import "EGORefreshTableHeaderView.h"
-#import "HTActivityIndicator.h"
 
 #define TEXT_COLOR	 [UIColor whiteColor]
 #define FLIP_ANIMATION_DURATION 0.18f
@@ -81,11 +80,7 @@
 		_arrowImage=layer;
 		
 		UIView *view;
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            view = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-        } else {
-            view = [[HTActivityIndicator alloc] initWithIndicatorStyle:HTActivityIndicatorStyleMediumWhite];
-        }
+        view = [[HTActivityIndicator alloc] initWithIndicatorStyle:HTActivityIndicatorStyleMediumWhite];
 		view.frame = CGRectMake(25.0f, frame.size.height - 38.0f, 20.0f, 20.0f);
 		[self addSubview:view];
 		_activityView = view;
@@ -152,11 +147,7 @@
 			}
 			
 			_statusLabel.text = NSLocalizedString(@"Pull down to refresh...", @"Pull down to refresh status");
-            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-                [(UIActivityIndicatorView *)_activityView stopAnimating];
-            } else {
-                [(HTActivityIndicator *)_activityView stopAnimating];
-            }
+            [(HTActivityIndicator *)_activityView stopAnimating];
 			[CATransaction begin];
 			[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions]; 
 			_arrowImage.hidden = NO;
@@ -169,11 +160,7 @@
 		case EGOOPullRefreshLoading:
 			
 			_statusLabel.text = NSLocalizedString(@"Loading...", @"Loading Status");
-            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-                [(UIActivityIndicatorView *)_activityView startAnimating];
-            } else {
-                [(HTActivityIndicator *)_activityView startAnimating];
-            }
+            [(HTActivityIndicator *)_activityView startAnimating];
 			[CATransaction begin];
 			[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions]; 
 			_arrowImage.hidden = YES;
