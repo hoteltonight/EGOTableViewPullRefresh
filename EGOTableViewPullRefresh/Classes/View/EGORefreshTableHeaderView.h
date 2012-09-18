@@ -26,40 +26,41 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
-#import "HTActivityIndicator.h"
 
-typedef enum{
+typedef enum {
 	EGOOPullRefreshPulling = 0,
 	EGOOPullRefreshNormal,
-	EGOOPullRefreshLoading,	
+	EGOOPullRefreshLoading,
 } EGOPullRefreshState;
 
 @protocol EGORefreshTableHeaderDelegate;
-@interface EGORefreshTableHeaderView : UIView {
-	
-	id _delegate;
-	EGOPullRefreshState _state;
 
-	UILabel *_lastUpdatedLabel;
-	UILabel *_statusLabel;
-	CALayer *_arrowImage;
-	HTActivityIndicator *_activityView;
-}
+@interface EGORefreshTableHeaderView : UIView
 
-@property(nonatomic,assign) id <EGORefreshTableHeaderDelegate> delegate;
+@property (nonatomic, assign) NSObject <EGORefreshTableHeaderDelegate> *delegate;
 @property (nonatomic, assign) UIEdgeInsets scrollViewInsets;
+@property (nonatomic, strong) UILabel *lastUpdatedLabel;
+@property (nonatomic, strong) UILabel *statusLabel;
+@property (nonatomic, strong) CALayer *arrowImage;
+@property (nonatomic, strong) UIView *activityView;
+@property (nonatomic, assign) EGOPullRefreshState state;
 
 - (id)initWithFrame:(CGRect)frame arrowImageName:(NSString *)arrow textColor:(UIColor *)textColor;
-
 - (void)refreshLastUpdatedDate;
 - (void)egoRefreshScrollViewDidScroll:(UIScrollView *)scrollView;
 - (void)egoRefreshScrollViewDidEndDragging:(UIScrollView *)scrollView;
 - (void)egoRefreshScrollViewDataSourceDidFinishedLoading:(UIScrollView *)scrollView;
+- (UILabel *)createLastUpdatedLabelWithTextColor:(UIColor *)textColor;
+- (UILabel *)createStatusLabelWithTextColor:(UIColor *)textColor;
+- (UIView *)createActivityIndicatorView;
 
 @end
+
 @protocol EGORefreshTableHeaderDelegate
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view;
 - (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view;
+
 @optional
 - (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view;
+
 @end
