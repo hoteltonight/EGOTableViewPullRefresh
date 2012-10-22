@@ -111,7 +111,8 @@
 		[dateFormatter setDateStyle:NSDateFormatterShortStyle];
 		[dateFormatter setTimeStyle:NSDateFormatterShortStyle];
         
-		_lastUpdatedLabel.text = [NSString stringWithFormat:@"Last Updated: %@", [dateFormatter stringFromDate:date]];
+        NSString *format = NSLocalizedStringWithDefaultValue(@"S_F_Last_Updated", nil, [NSBundle mainBundle], @"Last Updated: %@", @"Format for specifying the date and time that the information on screen was last updated.");
+		_lastUpdatedLabel.text = [NSString stringWithFormat:format, [dateFormatter stringFromDate:date]];
 		[[NSUserDefaults standardUserDefaults] setObject:_lastUpdatedLabel.text forKey:@"EGORefreshTableView_LastRefresh"];
 		[[NSUserDefaults standardUserDefaults] synchronize];
 	} else {
@@ -125,7 +126,7 @@
 {
 	switch (aState) {
 		case EGOOPullRefreshPulling:
-			self.statusLabel.text = NSLocalizedString(@"Release to refresh...", @"Release to refresh status");
+			self.statusLabel.text = NSLocalizedStringWithDefaultValue(@"S_Release_to_refresh", nil, [NSBundle mainBundle], @"Release to refresh...", @"Header during pull to refresh that explains how to complete the pull to refresh by letting go");
 			[CATransaction begin];
 			[CATransaction setAnimationDuration:FLIP_ANIMATION_DURATION];
 			self.arrowImage.transform = CATransform3DMakeRotation((M_PI / 180.0) * 180.0f, 0.0f, 0.0f, 1.0f);
@@ -141,7 +142,7 @@
 				[CATransaction commit];
 			}
 			
-			self.statusLabel.text = NSLocalizedString(@"Pull down to refresh...", @"Pull down to refresh status");
+			self.statusLabel.text = NSLocalizedStringWithDefaultValue(@"S_Pull_down_to_refresh", nil, [NSBundle mainBundle], @"Pull down to refresh...", @"Header during pull to refresh that explains that the user needs to pull down further to trigger the refresh");
             if ([self.activityView respondsToSelector:@selector(stopAnimating)]) {
                 [(id)self.activityView stopAnimating];
             }
@@ -156,7 +157,7 @@
 			break;
             
 		case EGOOPullRefreshLoading:
-			self.statusLabel.text = NSLocalizedString(@"Loading...", @"Loading Status");
+			self.statusLabel.text = NSLocalizedStringWithDefaultValue(@"S_Loading...", nil, [NSBundle mainBundle], @"Loading...", @"Header during pull to refresh after it is activated and is loading new data");
             if ([self.activityView respondsToSelector:@selector(startAnimating)]) {
                 [(id)self.activityView startAnimating];
             }
